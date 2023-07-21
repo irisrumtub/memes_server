@@ -5,16 +5,12 @@ export const graphService = {
         const urlData = `${url}/query/dateMesMem?start=${startDate}&end=${endDate}`;
         console.log(urlData);
         try {
-            const response = await axios.get(
-                `${url}/query/dateMesMem?start=${startDate}&end=${endDate}`,
-                {
-                    params: {
-                        start: startDate,
-                        end: endDate,
-                    },
-                }
-            );
-
+            const response = await axios.get(`${url}/query/dateMesMem?`, {
+                params: {
+                    start: startDate,
+                    end: endDate,
+                },
+            });
             console.log(response);
             return response;
         } catch (error) {

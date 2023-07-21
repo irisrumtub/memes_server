@@ -3,26 +3,41 @@ import LineChart from "./components/LineChart/LineChart";
 import PieChart from "./components/PieChart/PieChart";
 import VerticalBarChart from "./components/VerticalBarChart/VerticalBarChart";
 import { GraphContext } from "../context";
+import { useQuery } from "@tanstack/react-query";
+import { graphService } from "../../services/graph.service";
 interface Props {}
 
 const GraphList: React.FC<Props> = ({}) => {
-    const graphs = [
-        { id: 1, component: <LineChart /> },
-        { id: 2, component: <PieChart /> },
-        { id: 3, component: <VerticalBarChart /> },
-        { id: 4, component: <PieChart /> },
-        { id: 5, component: <VerticalBarChart /> },
-        { id: 6, component: <VerticalBarChart /> },
-        { id: 7, component: <LineChart /> },
-        { id: 8, component: <PieChart /> },
-        { id: 9, component: <PieChart /> },
-    ];
     const {
         selectGraph,
         fullScreenGraph,
         selectedGraphId,
         setFullScreenGraph,
+        memePerDay,
+        setMemePerDay,
+        memeDateDataset,
+        setMemeDateDataset,
+        graphPerDay,
+        startDate,
+        endDate,
     }: any = useContext(GraphContext);
+    const { data, isLoading, isError } = useQuery(["card"], () =>
+        graphService.getToDate(startDate, endDate)
+    );
+    if (data) {
+        setMemeDateDataset(data.data);
+    }
+    const graphs = [
+        { id: 1, component: <LineChart dataset={graphPerDay} /> },
+        { id: 2, component: <PieChart /> },
+        { id: 3, component: <VerticalBarChart /> },
+        { id: 4, component: <PieChart /> },
+        { id: 5, component: <VerticalBarChart /> },
+        { id: 6, component: <VerticalBarChart /> },
+        // { id: 7, component: <LineChart /> },
+        { id: 8, component: <PieChart /> },
+        { id: 9, component: <PieChart /> },
+    ];
 
     console.log(fullScreenGraph, selectGraph, selectedGraphId);
 
@@ -31,7 +46,7 @@ const GraphList: React.FC<Props> = ({}) => {
             ? graphs.find((graph) => graph.id === selectedGraphId)
             : null;
         return (
-            <div className="w-1/2 ">
+            <div className="w-full h-full">
                 {selectedGraph ? selectedGraph.component : null}
             </div>
         );

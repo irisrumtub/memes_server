@@ -1,20 +1,32 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { graphService } from "../../../../services/graph.service";
+import { GraphContext } from "../../../context";
 
 interface Props {
     setIsDatePickerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DateView: React.FC<Props> = ({ setIsDatePickerOpen }) => {
-    const [startDate, setStartDate] = useState<string>("04/01/2023");
-    const [endDate, setEndDate] = useState<string>("06/30/2023");
     const startDateRef = useRef<HTMLInputElement>(null);
     const endDateRef = useRef<HTMLInputElement>(null);
     //req service
+    const {
+        memeDateDataset,
+        setMemeDateDataset,
+        memePerDay,
+        setMemePerDay,
+        startDate,
+        endDate,
+        setStartDate,
+        setEndDate,
+    }: any = useContext(GraphContext);
     const { data, isLoading, isError } = useQuery(["card"], () =>
         graphService.getToDate(startDate, endDate)
     );
+    if (data) {
+        setMemeDateDataset(data.data);
+    }
     //ref if startDate,endDate state
     // if (isLoading) {
     //     return <div>Loading...</div>;
