@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Чёрный квадрат -->
+  <rect width="100" height="100" fill="black" />
+
+  <!-- Белые квадраты -->
+  <rect x="10" y="10" width="15" height="15" fill="white" />
+  <rect x="45" y="10" width="15" height="15" fill="white" />
+  <rect x="80" y="10" width="15" height="15" fill="white" />
+
+  <rect x="10" y="45" width="15" height="15" fill="white" />
+  <rect x="45" y="45" width="15" height="15" fill="white" />
+  <rect x="80" y="45" width="15" height="15" fill="white" />
+
+  <rect x="10" y="80" width="15" height="15" fill="white" />
+  <rect x="45" y="80" width="15" height="15" fill="white" />
+  <rect x="80" y="80" width="15" height="15" fill="white" />
+</svg>
