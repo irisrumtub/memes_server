@@ -52,7 +52,7 @@ const dailyMemAndMsgs = async (start, end) => {
     dates[datekey][entity.fromId.userId].memes++;
   });
   console.log(usersObj)
-  return dates
+  return {dates, usersObj}
 };
 
 
