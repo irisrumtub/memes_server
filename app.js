@@ -21,7 +21,7 @@ app.get('/',  (req, res)=> {
 });
 app.use('/query', queryRouter)
 app.use((req, res, next) => {
-  next(res.send('404 :)'));
+  res.send('404 :)');
 });
 app.listen(port, () => {
   console.log(`listening on port ${port}`)

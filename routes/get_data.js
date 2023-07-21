@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path')
 const msgsAndMemesByDay = require('../helpers/dateMesMem/dateMesMem')
-const dailyUserStats = require('../helpers/dailyUserStats/2')
+const dailyUserStats = require('../helpers/dailyUserStats/dailyUserStats')
 
 /* "21/01/2023": { memes: 1, msgs: 2 },
     "21/01/2023": { memes: 1, msgs: 2 }
