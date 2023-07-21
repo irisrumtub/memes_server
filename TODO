@@ -1,0 +1,2 @@
+known issues:
+times are calculated with UTC so if you are in UTC + 3 and you've sent your meme at 22:00 it will be calculated towards the following day
