@@ -41,19 +41,19 @@ const GraphList: React.FC<Props> = ({}) => {
         setFullScreenGraph(false);
     };
     return (
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap">
             {graphs.map((graph) => (
                 <div
                     key={graph.id}
                     onClick={() => selectGraph(graph.id)}
-                    className="w-52 h-52  m-1 bg-[#242424]"
+                    className="w-72 h-72 m-1 bg-[#242424]"
                 >
                     {graph.component}
                 </div>
             ))}
             {fullScreenGraph && (
                 <div
-                    className="fixed inset-0 flex justify-center items-center bg-opacity-75 bg-gray-900"
+                    className="fixed p-10 inset-0 flex justify-center items-center bg-opacity-75 bg-gray-900"
                     id="selected-graph"
                 >
                     {selectGraphView()}
