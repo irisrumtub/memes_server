@@ -1,21 +1,18 @@
 const fs = require('fs');
 const path = require("path")
 
-const usersfile = path.join(__dirname,"../../getusers/users.json");
-const users = fs.readFileSync(usersfile);
-
-const messagesfile = path.join(__dirname,"../../messages.json");
-const messages = fs.readFileSync(messagesfile);
-
-// Parse the JSON data
-const jsonMessages = JSON.parse(messages);
-const jsonUsers = JSON.parse(users)
+const dailyMemAndMsgs = (start, end) => {
+const usersfile = path.join(__dirname,"../../data/users.json");
+const users = JSON.parse((fs.readFileSync(usersfile)))
+const messagesfile = path.join(__dirname,"../../data/messages.json");
+const messages = JSON.parse(fs.readFileSync(messagesfile));
 
 const dates = {};
-const startDate = new Date("2023/04/01");
-const endDate = new Date("2023/06/30");
+const startDate = new Date(start);
+const endDate = new Date(end);
 const currentDate = new Date(startDate);
-userArray = Object.keys(jsonUsers)
+
+userArray = Object.keys(users)
 usersObj = {}
 userArray.forEach(user => {
     usersObj[user] = {
@@ -34,16 +31,14 @@ while (currentDate <= endDate) {
   currentDate.setDate(currentDate.getDate() + 1);
 }
 console.log(dates)
-const f = (messages) => {
+
 messages.forEach(entity => {
     if(entity.className !== "Message") return
     const ts = entity.date * 1000
     const mDate = new Date(ts) 
     const month = mDate.getMonth()+1
     const datekey = `${month.toString().padStart(2, '0')}/${mDate.getDate().toString().padStart(2, '0')}/${mDate.getFullYear()}`
-    if (!dates[datekey]) return
-    // console.log(datekey)
-
+    if (!dates[datekey]) return 'date out of range'
     dates[datekey][entity.fromId.userId].messages++
     if(!entity.media && !entity.message.includes('instagram')) return
     dates[datekey][entity.fromId.userId].memes++
@@ -53,4 +48,5 @@ fs.writeFile('2.json', JSON.stringify(dates), (err) => {
     console.log('The file has been saved!');
   });
 }
-f(jsonMessages)
+dailyMemAndMsgs("01/01/2023","06/30/2023")
+module.exports = dailyMemAndMsgs

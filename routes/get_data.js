@@ -3,7 +3,8 @@ const router = express.Router();
 const path = require('path')
 const msgsAndMemesByDay = require('../helpers/dateMesMem/dateMesMem')
 
-router.get('/', async (req, res, next) => { 
+//
+router.get('/dateMesMem', async (req, res, next) => { 
    
     const startDate = req.query.start
     const endDate = req.query.end

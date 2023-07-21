@@ -1,7 +1,7 @@
 const express = require('express')
 const createError = require('http-errors');
 const path = require('path')
-const getDataRouter = require('./routes/get_data')
+const queryRouter = require('./routes/get_data')
 const app = express()
 const port = 3000
 app.get('/',  (req, res)=> {
@@ -17,7 +17,7 @@ app.get('/',  (req, res)=> {
       }
   });
 });
-app.use('/datemesmem', getDataRouter)
+app.use('/query', queryRouter)
 app.use((req, res, next) => {
   next(res.send('404 :)'));
 });
