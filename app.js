@@ -4,6 +4,8 @@ const path = require('path')
 const queryRouter = require('./routes/get_data')
 const app = express()
 const port = 3000
+const cors = require('cors')
+app.use(cors())
 app.get('/',  (req, res)=> {
   const options = {
       root: path.join(__dirname, 'react/')
