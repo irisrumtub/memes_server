@@ -29,7 +29,6 @@ const GraphProvider = ({ children }: any) => {
         }
     }, [memeDateDataset]);
     ////////////
-    console.log(graphPerDay);
 
     const selectGraph = (graphId: any) => {
         SetSelectedGraphId(graphId);

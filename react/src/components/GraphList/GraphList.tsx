@@ -5,6 +5,8 @@ import VerticalBarChart from "./components/VerticalBarChart/VerticalBarChart";
 import { GraphContext } from "../context";
 import { useQuery } from "@tanstack/react-query";
 import { graphService } from "../../services/graph.service";
+import MemePerDay from "./components/MemePerDay/MemePerDay";
+import MemePerUser from "./components/MemePerUser/MemePerUser";
 interface Props {}
 
 const GraphList: React.FC<Props> = ({}) => {
@@ -21,15 +23,19 @@ const GraphList: React.FC<Props> = ({}) => {
         startDate,
         endDate,
     }: any = useContext(GraphContext);
-    const { data, isLoading, isError } = useQuery(["card"], () =>
-        graphService.getToDate(startDate, endDate)
-    );
-    if (data) {
-        setMemeDateDataset(data.data);
-    }
+    useEffect(() => {
+        async function fetchData() {
+            const data = await graphService.getToDate(startDate, endDate);
+            if (data) {
+                setMemeDateDataset(data.data);
+            }
+        }
+        fetchData();
+    }, []);
+
     const graphs = [
-        { id: 1, component: <LineChart dataset={graphPerDay} /> },
-        { id: 2, component: <PieChart /> },
+        { id: 1, component: <MemePerDay dataset={graphPerDay} /> },
+        { id: 2, component: <MemePerUser /> },
         { id: 3, component: <VerticalBarChart /> },
         { id: 4, component: <PieChart /> },
         { id: 5, component: <VerticalBarChart /> },
@@ -38,8 +44,6 @@ const GraphList: React.FC<Props> = ({}) => {
         { id: 8, component: <PieChart /> },
         { id: 9, component: <PieChart /> },
     ];
-
-    console.log(fullScreenGraph, selectGraph, selectedGraphId);
 
     const selectGraphView = () => {
         const selectedGraph = selectedGraphId
