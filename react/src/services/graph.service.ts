@@ -9,7 +9,6 @@ export const graphService = {
                     end: endDate,
                 },
             });
-            console.log(response);
             return response;
         } catch (error) {
             console.log(error);
@@ -24,7 +23,20 @@ export const graphService = {
                     end: endDate,
                 },
             });
-            console.log(response);
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
+    async getVideosAndPics(startDate: string, endDate: string) {
+        try {
+            const response = await axios.get(`${url}/query/getVideosAndPics?`, {
+                params: {
+                    start: startDate,
+                    end: endDate,
+                },
+            });
             return response;
         } catch (error) {
             console.log(error);

@@ -11,6 +11,7 @@ interface Props {}
 const MemePerUser: React.FC<Props> = ({}) => {
     const { startDate, endDate }: {} | any = useContext(GraphContext);
     const [graphData, setGraphData] = useState();
+    const [labels, setLabels] = useState<any>([]);
     useEffect(() => {
         async function fetchData() {
             const data = await graphService.getUserMeme(startDate, endDate);
@@ -30,17 +31,28 @@ const MemePerUser: React.FC<Props> = ({}) => {
             },
         },
     };
+    useEffect(() => {
+        if (graphData) {
+            setLabels(Object.keys(graphData));
+        }
+    }, [graphData]);
     const data = {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: labels.map((label) => label),
 
         datasets: [
             {
-                label: "# of Votes",
-                data: [12, 19, 3, 5, 2, 3],
+                label: "memes",
+                data: labels.map((label) => graphData[label].memes),
                 backgroundColor: [
                     "rgb(241,240,225)",
                     "rgb(80,99,133)",
                     "rgb(31,31,34)",
+                    "rgb(245,240,225)",
+                    "rgb(85,99,133)",
+                    "rgb(35,31,34)",
+                    "rgb(245,241,225)",
+                    "rgb(85,92,133)",
+                    "rgb(35,31,34)",
                 ],
                 borderColor: [
                     "rgb(241,240,225)",

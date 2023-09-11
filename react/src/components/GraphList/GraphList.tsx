@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { graphService } from "../../services/graph.service";
 import MemePerDay from "./components/MemePerDay/MemePerDay";
 import MemePerUser from "./components/MemePerUser/MemePerUser";
+import MemeVideoAndPics from "./components/MemeVideoAndPics/MemeVideoAndPics";
 interface Props {}
 
 const GraphList: React.FC<Props> = ({}) => {
@@ -36,7 +37,7 @@ const GraphList: React.FC<Props> = ({}) => {
     const graphs = [
         { id: 1, component: <MemePerDay dataset={graphPerDay} /> },
         { id: 2, component: <MemePerUser /> },
-        { id: 3, component: <VerticalBarChart /> },
+        { id: 3, component: <MemeVideoAndPics /> },
         { id: 4, component: <PieChart /> },
         { id: 5, component: <VerticalBarChart /> },
         { id: 6, component: <VerticalBarChart /> },

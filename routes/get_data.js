@@ -68,7 +68,7 @@ router.get("/getVideosAndPics", async (req, res, next) => {
 
   try {
     const response = await videosAndPics(startDate, endDate);
-    res.json(response);ау
+    res.json(response);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).json({ error: "Internal Server Error" });
