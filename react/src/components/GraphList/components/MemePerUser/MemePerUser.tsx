@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { useQuery } from "@tanstack/react-query";
 import { graphService } from "../../../../services/graph.service";
 import { GraphContext } from "../../../context";
 
@@ -17,12 +16,18 @@ const MemePerUser: React.FC<Props> = ({}) => {
             const data = await graphService.getUserMeme(startDate, endDate);
             if (data) {
                 setGraphData(data.data.usersObj);
-                console.log(graphData);
             }
         }
         fetchData();
     }, []);
-
+    const generateDynamicColors = React.useMemo(() => {
+        const dynamicColors = [];
+        for (let i = 0; i < labels.length; i++) {
+            const hue = (i * (360 / labels.length)) % 360;
+            dynamicColors.push(`hsl(${hue}, 50%, 60%)`);
+        }
+        return dynamicColors;
+    }, [labels]);
     const options = {
         plugins: {
             title: {
@@ -43,22 +48,8 @@ const MemePerUser: React.FC<Props> = ({}) => {
             {
                 label: "memes",
                 data: labels.map((label) => graphData[label].memes),
-                backgroundColor: [
-                    "rgb(241,240,225)",
-                    "rgb(80,99,133)",
-                    "rgb(31,31,34)",
-                    "rgb(245,240,225)",
-                    "rgb(85,99,133)",
-                    "rgb(35,31,34)",
-                    "rgb(245,241,225)",
-                    "rgb(85,92,133)",
-                    "rgb(35,31,34)",
-                ],
-                borderColor: [
-                    "rgb(241,240,225)",
-                    "rgb(80,99,133)",
-                    "rgb(31,31,34)",
-                ],
+                backgroundColor: generateDynamicColors,
+                borderColor: generateDynamicColors,
                 borderWidth: 1,
             },
         ],

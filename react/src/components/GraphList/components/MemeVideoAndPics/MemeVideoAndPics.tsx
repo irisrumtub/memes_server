@@ -23,7 +23,7 @@ ChartJS.register(
 const MemeVideoAndPics: React.FC = () => {
     const { startDate, endDate }: {} | any = useContext(GraphContext);
     const [graphData, setGraphData] = useState<any>("");
-    const [labels, setLabels] = useState<any>([]); // Initialize as an empty array
+    const [labels, setLabels] = useState<any>([]);
     useEffect(() => {
         async function fetchData() {
             const data = await graphService.getVideosAndPics(
@@ -56,16 +56,21 @@ const MemeVideoAndPics: React.FC = () => {
     }, [graphData]);
 
     const data = {
-        labels: labels.map((label) => label), // Map labels to user IDs
+        labels: labels.map((label: any) => label), // Map labels to user IDs
         datasets: [
             {
                 label: "Картиночки",
-                data: labels.map((label) => graphData.usersObj[label].pictures),
+                data: labels.map(
+                    (label: string | number) =>
+                        graphData.usersObj[label].pictures
+                ),
                 backgroundColor: "rgb(80,99,133)",
             },
             {
                 label: "Видевовс",
-                data: labels.map((label) => graphData.usersObj[label].videos),
+                data: labels.map(
+                    (label: string | number) => graphData.usersObj[label].videos
+                ),
                 backgroundColor: "rgb(31,31,34)",
             },
         ],
