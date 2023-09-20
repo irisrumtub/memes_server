@@ -10,6 +10,7 @@ import MemePerUser from "./components/MemePerUser/MemePerUser";
 import MemeVideoAndPics from "./components/MemeVideoAndPics/MemeVideoAndPics";
 import MemeVideoAndPicsSum from "./components/MemeVideoAndPics/MemeVideoAndPicsSum";
 import MemePerMouth from "./components/MemePerMouth/MemePerMouth";
+import MemePerMouthAvg from "./components/MemePerMouth/MemePerMouthAvg";
 interface Props {}
 
 const GraphList: React.FC<Props> = ({}) => {
@@ -43,7 +44,7 @@ const GraphList: React.FC<Props> = ({}) => {
         { id: 4, component: <MemeVideoAndPicsSum /> },
         { id: 5, component: <VerticalBarChart /> },
         { id: 6, component: <MemePerMouth /> },
-        // { id: 7, component: <LineChart /> },
+        { id: 7, component: <MemePerMouthAvg /> },
         { id: 8, component: <PieChart /> },
         { id: 9, component: <PieChart /> },
     ];

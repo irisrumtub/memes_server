@@ -38,17 +38,19 @@ const MemeVideoAndPics: React.FC = () => {
     }, []);
 
     const options = {
+        responsive: true,
+
         plugins: {
             legend: {
-                position: "left" as const,
+                position: "top" as const,
             },
             title: {
                 display: true,
                 text: "Chart.js Bar Chart",
             },
         },
+        maintainAspectRatio: false,
     };
-
     useEffect(() => {
         if (graphData) {
             setLabels(Object.keys(graphData.usersObj));

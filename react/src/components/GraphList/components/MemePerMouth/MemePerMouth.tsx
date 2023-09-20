@@ -30,6 +30,8 @@ const MemePerMonth: React.FC = () => {
                 const result = Object.entries(monthlyMemesCount).map(
                     ([month, totalMemes]) => ({ month, totalMemes })
                 );
+                console.log(result);
+                // mb mouth state for avg counter in mouthAvg
                 setGraphData(result);
             }
         }
@@ -50,15 +52,18 @@ const MemePerMonth: React.FC = () => {
     };
 
     const options = {
+        responsive: true,
+
         plugins: {
             legend: {
-                position: "left" as const,
+                position: "top" as const,
             },
             title: {
                 display: true,
                 text: "Total Memes by Month",
             },
         },
+        maintainAspectRatio: false,
     };
 
     return <Bar options={options} data={data} />;

@@ -39,7 +39,6 @@ const MemeVideoAndPicsSum: React.FC = ({}) => {
     useEffect(() => {
         if (graphData) {
             setLabel(graphData?.total);
-            console.log(graphData);
         }
     }, [graphData]);
 
