@@ -5,10 +5,9 @@ import { Bar } from "react-chartjs-2";
 
 // ref simple
 const MemePerMonth: React.FC = () => {
-    const { startDate, endDate }: {} | any = useContext(GraphContext);
-    const [graphData, setGraphData] = useState<
-        { month: string; totalMemes: number }[]
-    >([]);
+    const { startDate, endDate, memePerMonth, setMemePerMonth }: {} | any =
+        useContext(GraphContext);
+
     useEffect(() => {
         async function fetchData() {
             const data = await graphService.getToDate(startDate, endDate);
@@ -18,34 +17,51 @@ const MemePerMonth: React.FC = () => {
                         const [month, day, year] = date.split("/");
                         const monthLabel = `${month}/${year}`;
                         if (acc[monthLabel]) {
-                            acc[monthLabel] += values.memes;
+                            acc[monthLabel].totalMemes += values.memes;
                         } else {
-                            acc[monthLabel] = values.memes;
+                            const lastDayOfMonth = new Date(
+                                +year,
+                                +month,
+                                0
+                            ).getDate();
+                            acc[monthLabel] = {
+                                totalMemes: values.memes,
+                                daysInMonth: lastDayOfMonth,
+                            };
                         }
                         return acc;
                     },
-                    {} as { [month: string]: number }
+                    {} as {
+                        [month: string]: {
+                            totalMemes: number;
+                            daysInMonth: number;
+                        };
+                    }
                 );
 
                 const result = Object.entries(monthlyMemesCount).map(
-                    ([month, totalMemes]) => ({ month, totalMemes })
+                    ([month, { totalMemes, daysInMonth }]) => ({
+                        month,
+                        totalMemes,
+                        daysInMonth,
+                    })
                 );
                 console.log(result);
-                // mb mouth state for avg counter in mouthAvg
-                setGraphData(result);
+                setMemePerMonth(result);
             }
         }
+
         fetchData();
     }, [startDate, endDate]);
 
-    const labels = graphData.map((item) => item.month);
+    const labels = memePerMonth.map((item) => item.month);
 
     const data = {
         labels,
         datasets: [
             {
                 label: "Total Memes",
-                data: graphData.map((item) => item.totalMemes),
+                data: memePerMonth.map((item) => item.totalMemes),
                 backgroundColor: "rgb(80,99,133)",
             },
         ],

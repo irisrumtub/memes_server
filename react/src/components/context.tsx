@@ -7,12 +7,17 @@ interface memeDateDatasetType {
         messages: number;
     };
 }
+interface MemePerMonthType {
+    month: string;
+    totalMemes: number;
+}
 const GraphProvider = ({ children }: any) => {
     const [fullScreenGraph, setFullScreenGraph] = useState<boolean>(false);
     const [selectedGraphId, SetSelectedGraphId] = useState(null);
     const [memePerDay, setMemePerDay] = useState(null);
     const [startDate, setStartDate] = useState<string>("04/01/2023");
     const [endDate, setEndDate] = useState<string>("06/30/2023");
+    const [memePerMonth, setMemePerMonth] = useState<MemePerMonthType | []>([]);
     const [memeDateDataset, setMemeDateDataset] =
         useState<memeDateDatasetType | null>(null);
     const [graphPerDay, setGraphPerDay] = useState<{}>({});
@@ -52,6 +57,8 @@ const GraphProvider = ({ children }: any) => {
                 setStartDate,
                 endDate,
                 setEndDate,
+                memePerMonth,
+                setMemePerMonth,
             }}
         >
             {children}

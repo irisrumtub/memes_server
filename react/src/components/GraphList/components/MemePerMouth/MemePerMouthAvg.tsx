@@ -5,23 +5,27 @@ import { graphService } from "../../../../services/graph.service";
 import { options } from "../PieChart/PieChart";
 import { GraphContext } from "../../../context";
 
-interface Props {}
-
-const MemePerMouthAvg: React.FC<Props> = ({}) => {
-    const [graphData, setGraphData] = useState("");
-    const { startDate, endDate }: {} | any = useContext(GraphContext);
+interface avgMemeDataType {
+    label: string;
+    avgMemes: number;
+}
+// fix style
+const MemePerMouthAvg: React.FC = ({}) => {
+    const [avgMemeData, SetAvgMemeData] = useState<avgMemeDataType[]>([]);
+    const { startDate, endDate, memePerMonth }: {} | any =
+        useContext(GraphContext);
 
     useEffect(() => {
-        async function fetchData() {
-            const data = await graphService.getToDate(startDate, endDate);
-            if (data) {
-                console.log(data.data);
+        if (memePerMonth) {
+            const avgMemeData = memePerMonth.map((item) => ({
+                label: item.month,
+                avgMemes: item.totalMemes / item.daysInMonth,
+            }));
+            console.log(avgMemeData);
 
-                setGraphData(data.data);
-            }
+            SetAvgMemeData(avgMemeData);
         }
-        fetchData();
-    }, [startDate, endDate]);
+    }, [startDate, endDate, memePerMonth]);
 
     const options = {
         responsive: true,
@@ -34,15 +38,16 @@ const MemePerMouthAvg: React.FC<Props> = ({}) => {
                 text: "Graph1",
             },
         },
-        maintainAspectRatio: false,
     };
 
     const data = {
-        labels: "test",
+        labels: avgMemeData.map((item) => item.label),
         datasets: [
             {
-                label: "Сообщения",
-                data: "test",
+                label: "Avg memesPerMouth",
+                data: avgMemeData.map((item) =>
+                    Number(item.avgMemes).toFixed(1)
+                ),
                 borderColor: "rgb(80, 99, 133)",
                 backgroundColor: "rgb(80, 99, 133)",
             },
